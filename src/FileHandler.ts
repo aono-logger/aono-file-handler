@@ -14,6 +14,8 @@ const mkdir = promisify(fs.mkdir);
  * @author Maciej Chalapuk (maciej@chalapuk.pl)
  */
 export class FileHandler implements Handler {
+  private _bytesWritten = 0;
+
   private _currentFile : string | null = null;
   private _fd : number;
 
@@ -23,6 +25,9 @@ export class FileHandler implements Handler {
 
   get currentFile() {
     return this._currentFile;
+  }
+  get bytesWritten() {
+    return this._bytesWritten;
   }
 
   async handle(entries : Entry[]) : Promise<void> {
@@ -34,7 +39,9 @@ export class FileHandler implements Handler {
       await ensureDirectoryExists(this._currentFile);
       this._fd = await open(this._currentFile, 'ax');
     }
-    await write(this._fd, entries.map(this.stringify).join(''));
+    const serializedEntries = entries.map(this.stringify).join('');
+    const result = await write(this._fd, serializedEntries);
+    this._bytesWritten += result.bytesWritten;
   }
 
   private filePath(timestamp : number) {
