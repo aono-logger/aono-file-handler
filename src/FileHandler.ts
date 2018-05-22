@@ -7,8 +7,11 @@ import { dirname } from 'path';
 
 const open = promisify(fs.open);
 const write = promisify(fs.write);
+const close = promisify(fs.close);
 const exists = promisify(fs.exists);
 const mkdir = promisify(fs.mkdir);
+
+const HUNDRED_MEGS = 100 * 1024 * 1024;
 
 /**
  * @author Maciej Chalapuk (maciej@chalapuk.pl)
@@ -17,14 +20,18 @@ export class FileHandler implements Handler {
   private _bytesWritten = 0;
 
   private _currentFile : string | null = null;
+  private _currentFileSize = 0;
   private _fd : number;
 
-  constructor(readonly prefix : string) {
+  constructor(readonly prefix : string, readonly rotationBytesThreshold = HUNDRED_MEGS) {
     this.stringify = this.stringify.bind(this);
   }
 
   get currentFile() {
     return this._currentFile;
+  }
+  get currentFileSize() {
+    return this._currentFileSize;
   }
   get bytesWritten() {
     return this._bytesWritten;
@@ -41,7 +48,16 @@ export class FileHandler implements Handler {
     }
     const serializedEntries = entries.map(this.stringify).join('');
     const result = await write(this._fd, serializedEntries);
+
     this._bytesWritten += result.bytesWritten;
+    this._currentFileSize += result.bytesWritten;
+
+    if (this._currentFileSize >= this.rotationBytesThreshold) {
+      // New file will be created when handling next batch of entries.
+      this._currentFile = null;
+      this._currentFileSize = 0;
+      await close(this._fd);
+    }
   }
 
   private filePath(timestamp : number) {
@@ -53,10 +69,10 @@ export class FileHandler implements Handler {
       `"@timestamp": ${entry.timestamp}, `+
       `"logger": "${entry.logger}", `+
       `"level": ${safeJsonStringify(entry.level)}, `+
-      `"message": "${entry.message}", `+
+      `"message": "${entry.message}"`+
       Object.keys(entry.meta)
-        .map(key => `"»${key}": ${safeJsonStringify(entry.meta[key])}`)
-        .join(', ')+
+        .map(key => `, "»${key}": ${safeJsonStringify(entry.meta[key])}`)
+        .join('')+
       ' }\n';
   }
 }
