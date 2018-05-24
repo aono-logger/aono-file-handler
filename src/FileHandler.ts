@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import { promisify } from 'util';
 import { dirname } from 'path';
 
+import { Builder } from './Builder';
 import { Formatter } from './Formatter';
 import { LogstashFormatter } from './LogstashFormatter';
 
@@ -21,6 +22,10 @@ const LOGSTASH_FORMATTER = new LogstashFormatter();
  * @author Maciej Chalapuk (maciej@chalapuk.pl)
  */
 export class FileHandler implements Handler {
+  static builder() {
+    return new Builder();
+  }
+
   private _bytesWritten = 0;
 
   private _currentFile : string | null = null;
