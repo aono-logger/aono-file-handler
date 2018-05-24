@@ -5,6 +5,9 @@ import * as fs from 'fs';
 import { promisify } from 'util';
 import { dirname } from 'path';
 
+import { Formatter } from './Formatter';
+import { LogstashFormatter } from './LogstashFormatter';
+
 const open = promisify(fs.open);
 const write = promisify(fs.write);
 const close = promisify(fs.close);
@@ -12,6 +15,7 @@ const exists = promisify(fs.exists);
 const mkdir = promisify(fs.mkdir);
 
 const HUNDRED_MEGS = 100 * 1024 * 1024;
+const LOGSTASH_FORMATTER = new LogstashFormatter();
 
 /**
  * @author Maciej Chalapuk (maciej@chalapuk.pl)
@@ -23,8 +27,12 @@ export class FileHandler implements Handler {
   private _currentFileSize = 0;
   private _fd : number;
 
-  constructor(readonly prefix : string, readonly rotationBytesThreshold = HUNDRED_MEGS) {
-    this.stringify = this.stringify.bind(this);
+  private _format : (entry : Entry) => string;
+
+  constructor(readonly prefix : string,
+              readonly rotationBytesThreshold : number = HUNDRED_MEGS,
+              readonly formatter : Formatter  = LOGSTASH_FORMATTER) {
+    this._format = this.formatter.format.bind(this.formatter);
   }
 
   get currentFile() {
@@ -42,11 +50,11 @@ export class FileHandler implements Handler {
       return;
     }
     if (this.currentFile === null) {
-      this._currentFile = this.filePath((entries[0] as Entry).timestamp);
+      this._currentFile = this._createFilePath((entries[0] as Entry).timestamp);
       await ensureDirectoryExists(this._currentFile);
       this._fd = await open(this._currentFile, 'ax');
     }
-    const serializedEntries = entries.map(this.stringify).join('');
+    const serializedEntries = entries.map(this._format).join('');
     const result = await write(this._fd, serializedEntries);
 
     this._bytesWritten += result.bytesWritten;
@@ -60,20 +68,8 @@ export class FileHandler implements Handler {
     }
   }
 
-  private filePath(timestamp : number) {
-    return `${this.prefix}.${format(new Date(timestamp))}`;
-  }
-
-  private stringify(entry : Entry) {
-    return '{ '+
-      `"@timestamp": ${entry.timestamp}, `+
-      `"logger": "${entry.logger}", `+
-      `"level": ${safeJsonStringify(entry.level)}, `+
-      `"message": "${entry.message}"`+
-      Object.keys(entry.meta)
-        .map(key => `, "»${key}": ${safeJsonStringify(entry.meta[key])}`)
-        .join('')+
-      ' }\n';
+  private _createFilePath(timestamp : number) {
+    return `${this.prefix}.${dateSuffix(new Date(timestamp))}`;
   }
 }
 
@@ -88,16 +84,8 @@ async function ensureDirectoryExists(filePath : string) {
   await mkdir(dir);
 }
 
-function format(date : Date) {
+function dateSuffix(date : Date) {
   const iso = date.toISOString();
   return `${iso.slice(0, 10)}_${iso.slice(11, 23)}`;
-}
-
-function safeJsonStringify(obj : any) {
-  try {
-    return JSON.stringify(obj);
-  } catch(e) {
-    return `"### Error while stringifying object of type ${typeof obj}: ${e.message}"`
-  }
 }
 

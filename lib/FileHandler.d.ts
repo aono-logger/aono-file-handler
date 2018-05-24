@@ -1,20 +1,22 @@
 import { Handler, Entry } from 'aono';
+import { Formatter } from './Formatter';
 /**
  * @author Maciej Chalapuk (maciej@chalapuk.pl)
  */
 export declare class FileHandler implements Handler {
     readonly prefix: string;
     readonly rotationBytesThreshold: number;
+    readonly formatter: Formatter;
     private _bytesWritten;
     private _currentFile;
     private _currentFileSize;
     private _fd;
-    constructor(prefix: string, rotationBytesThreshold?: number);
+    private _format;
+    constructor(prefix: string, rotationBytesThreshold?: number, formatter?: Formatter);
     readonly currentFile: string | null;
     readonly currentFileSize: number;
     readonly bytesWritten: number;
     handle(entries: Entry[]): Promise<void>;
-    private filePath(timestamp);
-    private stringify(entry);
+    private _createFilePath(timestamp);
 }
 export default FileHandler;
