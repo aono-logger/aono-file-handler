@@ -23,7 +23,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"@timestamp": 0, '+
+        '"timestamp": 0, '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!"'+
@@ -41,7 +41,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"@timestamp": 0, '+
+        '"timestamp": 0, '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
@@ -68,7 +68,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"@timestamp": 0, '+
+        '"timestamp": 0, '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
@@ -87,7 +87,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"@timestamp": 0, '+
+        '"timestamp": 0, '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+

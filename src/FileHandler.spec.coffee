@@ -45,15 +45,15 @@ describe "FileHandler", ->
       it "contains properly set currentFile", ->
         testedHandler.currentFile.should.equal "#{prefix}.1970-01-01_00:00:00.000"
       it "contains properly set currentFileSize", ->
-        testedHandler.currentFileSize.should.equal 82
+        testedHandler.currentFileSize.should.equal 81
       it "contains properly set bytesWritten", ->
-        testedHandler.bytesWritten.should.equal 82
+        testedHandler.bytesWritten.should.equal 81
 
       it "wrote log entry to a log file", ->
         contents = fs.readFileSync testedHandler.currentFile
           .toString "utf-8"
         contents.should.equal '{ '+
-          '"@timestamp": 0, '+
+          '"timestamp": 0, '+
           '"logger": "test", '+
           '"level": "good", '+
           '"message": "hello, file!"'+
@@ -74,15 +74,15 @@ describe "FileHandler", ->
       it "contains properly set currentFile", ->
         testedHandler.currentFile.should.equal "#{prefix}.1970-01-01_00:00:00.000"
       it "contains properly set currentFileSize", ->
-        testedHandler.currentFileSize.should.equal 97
+        testedHandler.currentFileSize.should.equal 96
       it "contains properly set bytesWritten", ->
-        testedHandler.bytesWritten.should.equal 97
+        testedHandler.bytesWritten.should.equal 96
 
       it "wrote log entry to a log file", ->
         contents = fs.readFileSync testedHandler.currentFile
           .toString "utf-8"
         contents.should.equal '{ '+
-          '"@timestamp": 0, '+
+          '"timestamp": 0, '+
           '"logger": "test", '+
           '"level": "good", '+
           '"message": "hello, file!", '+
@@ -131,13 +131,13 @@ describe "FileHandler", ->
           testedHandler.currentFileSize.should.equal 0
 
         it "contains properly set bytesWritten", ->
-          testedHandler.bytesWritten.should.equal 165
+          testedHandler.bytesWritten.should.equal 163
 
         it "wrote first log entry to first file", ->
           contents = fs.readFileSync "#{prefix}.1970-01-01_00:00:00.000"
             .toString "utf-8"
           contents.should.equal '{ '+
-            '"@timestamp": 0, '+
+            '"timestamp": 0, '+
             '"logger": "test", '+
             '"level": "good", '+
             '"message": "hello, file!"'+
@@ -147,7 +147,7 @@ describe "FileHandler", ->
           contents = fs.readFileSync "#{prefix}.1970-01-01_00:00:00.001"
             .toString "utf-8"
           contents.should.equal '{ '+
-            '"@timestamp": 1, '+
+            '"timestamp": 1, '+
             '"logger": "test", '+
             '"level": "bad", '+
             '"message": "it\'s you again"'+

@@ -11,7 +11,7 @@ export class LogstashFormatter implements Formatter {
   }
   format(entry : Entry) {
     return '{ '+
-      `"@timestamp": ${entry.timestamp}, `+
+      `"timestamp": ${entry.timestamp}, `+
       `"logger": "${entry.logger}", `+
       `"level": ${safeJsonStringify(entry.level)}, `+
       `"message": "${entry.message}"`+
