@@ -12,9 +12,9 @@ export class LogstashFormatter implements Formatter {
   format(entry : Entry) {
     return '{ '+
       `"timestamp": ${entry.timestamp}, `+
-      `"logger": "${entry.logger}", `+
+      `"logger": ${safeJsonStringify(entry.logger)}, `+
       `"level": ${safeJsonStringify(entry.level)}, `+
-      `"message": "${entry.message}"`+
+      `"message": ${safeJsonStringify(entry.message)}`+
       Object.keys(this.consts)
         .map(key => `, "${key}": ${safeJsonStringify(this.consts[key])}`)
         .join('')+

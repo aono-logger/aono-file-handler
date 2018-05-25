@@ -48,6 +48,23 @@ describe "LogstashFormatter", ->
         '"»number": 1'+
       ' }\n'
 
+    it "formats an entry containing utf character", ->
+      entry =
+        timestamp: 10
+        logger: "test"
+        level: "good"
+        message: "☃"
+        meta: {}
+
+      formatted = testedFormatter.format entry
+
+      formatted.should.equal '{ '+
+        '"timestamp": 10, '+
+        '"logger": "test", '+
+        '"level": "good", '+
+        '"message": "☃"'+
+      ' }\n'
+
   describe "when created with some consts", ->
     consts = author: "Maciej"
 
