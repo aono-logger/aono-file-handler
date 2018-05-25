@@ -16,7 +16,7 @@ export declare class FileHandler implements Handler {
     private _format;
     constructor(prefix: string, rotationBytesThreshold?: number, formatter?: Formatter);
     readonly currentFile: string | null;
-    readonly currentFileSize: number;
+    readonly currentFileSize: number | null;
     readonly bytesWritten: number;
     handle(entries: Entry[]): Promise<void>;
     private _createFilePath(timestamp);

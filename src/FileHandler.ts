@@ -44,7 +44,7 @@ export class FileHandler implements Handler {
     return this._currentFile;
   }
   get currentFileSize() {
-    return this._currentFileSize;
+    return this._currentFile ? this._currentFileSize : null;
   }
   get bytesWritten() {
     return this._bytesWritten;

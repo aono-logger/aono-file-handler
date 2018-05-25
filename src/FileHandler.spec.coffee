@@ -27,7 +27,7 @@ describe "FileHandler", ->
     it "contains null currentFile", ->
       (should testedHandler.currentFile).equal null
     it "contains zeroed currentFileSize", ->
-      testedHandler.currentFileSize.should.equal 0
+      (should testedHandler.currentFileSize).equal null
     it "contains zero bytesWritten", ->
       testedHandler.bytesWritten.should.equal 0
 
@@ -112,7 +112,7 @@ describe "FileHandler", ->
       it "contains null currentFile", ->
         (should testedHandler.currentFile).equal null
       it "contains zeroed currentFileSize", ->
-        testedHandler.currentFileSize.should.equal 0
+        (should testedHandler.currentFileSize).equal null
 
       describe "and after adding second log entry", ->
         entry1 =
@@ -128,7 +128,7 @@ describe "FileHandler", ->
         it "contains null currentFile", ->
           (should testedHandler.currentFile).equal null
         it "contains zeroed currentFileSize", ->
-          testedHandler.currentFileSize.should.equal 0
+          (should testedHandler.currentFileSize).equal null
 
         it "contains properly set bytesWritten", ->
           testedHandler.bytesWritten.should.equal 163
