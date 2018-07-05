@@ -10,8 +10,12 @@ export class LogstashFormatter implements Formatter {
   constructor(readonly consts : any = {}) {
   }
   format(entry : Entry) {
+    const date = new Date();
+    date.setTime(entry.timestamp);
+    const formattedDate = date.toISOString();
+
     return '{ '+
-      `"timestamp": ${entry.timestamp}, `+
+      `"timestamp": ${safeJsonStringify(formattedDate)}, `+
       `"logger": ${safeJsonStringify(entry.logger)}, `+
       `"level": ${safeJsonStringify(entry.level)}, `+
       `"message": ${safeJsonStringify(entry.message)}`+

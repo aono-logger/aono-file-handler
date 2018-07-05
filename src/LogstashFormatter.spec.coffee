@@ -23,7 +23,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"timestamp": 0, '+
+        '"timestamp": "1970-01-01T00:00:00.000Z", '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!"'+
@@ -41,7 +41,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"timestamp": 0, '+
+        '"timestamp": "1970-01-01T00:00:00.000Z", '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
@@ -59,7 +59,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"timestamp": 10, '+
+        '"timestamp": "1970-01-01T00:00:00.010Z", '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "☃"'+
@@ -85,7 +85,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"timestamp": 0, '+
+        '"timestamp": "1970-01-01T00:00:00.000Z", '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
@@ -104,7 +104,7 @@ describe "LogstashFormatter", ->
       formatted = testedFormatter.format entry
 
       formatted.should.equal '{ '+
-        '"timestamp": 0, '+
+        '"timestamp": "1970-01-01T00:00:00.000Z", '+
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
