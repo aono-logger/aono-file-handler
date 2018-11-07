@@ -33,7 +33,13 @@ export default LogstashFormatter;
 
 function safeJsonStringify(obj : any) {
   try {
-    return JSON.stringify(obj);
+    if (obj instanceof Error && obj.stack) {
+      // Errors are stringified to arrays containing stack trace
+      // which will render nicely in Kibana.
+      return JSON.stringify(obj.stack.split('\n'));
+    } else {
+      return JSON.stringify(obj);
+    }
   } catch(e) {
     return `"### Error while stringifying object of type ${typeof obj}: ${e.message}"`
   }

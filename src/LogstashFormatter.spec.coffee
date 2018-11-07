@@ -48,6 +48,26 @@ describe "LogstashFormatter", ->
         '"»number": 1'+
       ' }\n'
 
+    it "formats an entry with Error in meta", ->
+      entry =
+        timestamp: 0
+        logger: "test"
+        level: "good"
+        message: "hello, file!"
+        meta:
+          error: new Error
+      entry.meta.error.stack = "a\na\na"
+
+      formatted = testedFormatter.format entry
+
+      formatted.should.equal '{ '+
+        '"timestamp": "1970-01-01T00:00:00.000Z", '+
+        '"logger": "test", '+
+        '"level": "good", '+
+        '"message": "hello, file!", '+
+        '"»error": ["a","a","a"]'+
+      ' }\n'
+
     it "formats an entry containing utf character", ->
       entry =
         timestamp: 10
