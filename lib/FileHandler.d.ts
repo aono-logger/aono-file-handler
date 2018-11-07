@@ -19,6 +19,6 @@ export declare class FileHandler implements Handler {
     readonly currentFileSize: number | null;
     readonly bytesWritten: number;
     handle(entries: Entry[]): Promise<void>;
-    private _createFilePath(timestamp);
+    private _createFilePath;
 }
 export default FileHandler;
