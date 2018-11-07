@@ -14,7 +14,7 @@ export class LogstashFormatter implements Formatter {
     date.setTime(entry.timestamp);
     const formattedDate = date.toISOString();
 
-    return '{ '+
+    const message = '{ '+
       `"timestamp": ${safeJsonStringify(formattedDate)}, `+
       `"logger": ${safeJsonStringify(entry.logger)}, `+
       `"level": ${safeJsonStringify(entry.level)}, `+
@@ -26,6 +26,9 @@ export class LogstashFormatter implements Formatter {
         .map(key => `, "»${key}": ${safeJsonStringify(entry.meta[key])}`)
         .join('')+
       ' }\n';
+
+    const entityEncoded = message.replace(/[\u00A0-\u9999<>\&]/gim, i => `&#${i.charCodeAt(0)};`);
+    return entityEncoded;
   }
 }
 
@@ -41,7 +44,7 @@ function safeJsonStringify(obj : any) {
       return JSON.stringify(obj);
     }
   } catch(e) {
-    return `"### Error while stringifying object of type ${typeof obj}: ${e.message}"`
+    return `["### Error while stringifying object of type ${typeof obj} ###","${e.message}"]`
   }
 }
 

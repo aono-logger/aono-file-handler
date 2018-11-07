@@ -45,7 +45,7 @@ describe "LogstashFormatter", ->
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
-        '"»number": 1'+
+        '"&#187;number": 1'+
       ' }\n'
 
     it "formats an entry with Error in meta", ->
@@ -65,7 +65,7 @@ describe "LogstashFormatter", ->
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
-        '"»error": ["a","a","a"]'+
+        '"&#187;error": ["a","a","a"]'+
       ' }\n'
 
     it "formats an entry containing utf character", ->
@@ -82,7 +82,7 @@ describe "LogstashFormatter", ->
         '"timestamp": "1970-01-01T00:00:00.010Z", '+
         '"logger": "test", '+
         '"level": "good", '+
-        '"message": "☃"'+
+        '"message": "&#9731;"'+
       ' }\n'
 
   describe "when created with some consts", ->
@@ -129,6 +129,6 @@ describe "LogstashFormatter", ->
         '"level": "good", '+
         '"message": "hello, file!", '+
         '"author": "Maciej", '+
-        '"»number": 1'+
+        '"&#187;number": 1'+
       ' }\n'
 

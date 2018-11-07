@@ -74,9 +74,9 @@ describe "FileHandler", ->
       it "contains properly set currentFile", ->
         testedHandler.currentFile.should.equal "#{prefix}.1970-01-01_00:00:00.000"
       it "contains properly set currentFileSize", ->
-        testedHandler.currentFileSize.should.equal 121
+        testedHandler.currentFileSize.should.equal 125
       it "contains properly set bytesWritten", ->
-        testedHandler.bytesWritten.should.equal 121
+        testedHandler.bytesWritten.should.equal 125
 
       it "wrote log entry to a log file", ->
         contents = fs.readFileSync testedHandler.currentFile
@@ -86,7 +86,7 @@ describe "FileHandler", ->
           '"logger": "test", '+
           '"level": "good", '+
           '"message": "hello, file!", '+
-          '"»number": 1'+
+          '"&#187;number": 1'+
         ' }\n'
 
   describe "after creation with small rotation threshold", ->
