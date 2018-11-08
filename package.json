@@ -1,6 +1,6 @@
 {
   "name": "aono-file-handler",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "file handler with formatting and rotation support for aono logger",
   "main": "index.js",
   "scripts": {
