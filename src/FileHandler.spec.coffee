@@ -86,7 +86,7 @@ describe "FileHandler", ->
           '"logger": "test", '+
           '"level": "good", '+
           '"message": "hello, file!", '+
-          '"&#187;number": 1'+
+          '"\\u00bbnumber": 1'+
         ' }\n'
 
   describe "after creation with small rotation threshold", ->

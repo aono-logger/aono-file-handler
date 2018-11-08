@@ -27,8 +27,8 @@ export class LogstashFormatter implements Formatter {
         .join('')+
       ' }\n';
 
-    const entityEncoded = message.replace(/[\u00A0-\u9999<>\&]/gim, i => `&#${i.charCodeAt(0)};`);
-    return entityEncoded;
+    const utfEncoded = encodeUtf(message);
+    return utfEncoded;
   }
 }
 
@@ -46,5 +46,12 @@ function safeJsonStringify(obj : any) {
   } catch(e) {
     return `["### Error while stringifying object of type ${typeof obj} ###","${e.message}"]`
   }
+}
+
+function encodeUtf(message : string) {
+  return message.replace(/[\u00A0-\u9999<>\&]/gim, i => {
+    const hex = i.charCodeAt(0).toString(16);
+    return `\\u${(hex.length === 2 ? '00' : '')}${hex}`;
+  });
 }
 
