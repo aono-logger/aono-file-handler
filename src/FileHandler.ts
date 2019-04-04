@@ -35,8 +35,8 @@ export class FileHandler implements Handler {
   private _format : (entry : Entry) => string;
 
   constructor(readonly prefix : string,
-              readonly rotationBytesThreshold : number = HUNDRED_MEGS,
-              readonly formatter : Formatter  = LOGSTASH_FORMATTER) {
+              readonly formatter : Formatter  = LOGSTASH_FORMATTER,
+              readonly rotationBytesThreshold : number = HUNDRED_MEGS) {
     this._format = this.formatter.format.bind(this.formatter);
   }
 

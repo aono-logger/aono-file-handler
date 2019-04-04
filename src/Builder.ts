@@ -33,8 +33,8 @@ export class Builder {
   build() : FileHandler {
     return new FileHandler(
       this._prefix,
+      this._formatter,
       this._rotationBytesThreshold,
-      this._formatter
     );
   }
 }

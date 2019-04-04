@@ -5,6 +5,8 @@ glob = util.promisify require "glob"
 
 FileHandler = require "./FileHandler"
   .FileHandler
+LogstashFormatter = require "./LogstashFormatter"
+  .LogstashFormatter
 
 describe "FileHandler", ->
   prefix = "/tmp/aono-file-handler/test.log"
@@ -74,9 +76,9 @@ describe "FileHandler", ->
       it "contains properly set currentFile", ->
         testedHandler.currentFile.should.equal "#{prefix}.1970-01-01_00:00:00.000"
       it "contains properly set currentFileSize", ->
-        testedHandler.currentFileSize.should.equal 125
+        testedHandler.currentFileSize.should.equal 124
       it "contains properly set bytesWritten", ->
-        testedHandler.bytesWritten.should.equal 125
+        testedHandler.bytesWritten.should.equal 124
 
       it "wrote log entry to a log file", ->
         contents = fs.readFileSync testedHandler.currentFile
@@ -86,14 +88,14 @@ describe "FileHandler", ->
           '"logger": "test", '+
           '"level": "good", '+
           '"message": "hello, file!", '+
-          '"\\u00bbnumber": 1'+
+          '"aono_number": 1'+
         ' }\n'
 
   describe "after creation with small rotation threshold", ->
     smallThreshold = 16
 
     beforeEach ->
-      testedHandler = new FileHandler prefix, smallThreshold
+      testedHandler = new FileHandler prefix, new LogstashFormatter, smallThreshold
 
     it "contains properly set rotation threshold", ->
       testedHandler.rotationBytesThreshold.should.equal smallThreshold

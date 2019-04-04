@@ -7,7 +7,10 @@ import { Formatter } from './Formatter';
  * @author Maciej Chałapuk (maciej@chalapuk.pl)
  */
 export class LogstashFormatter implements Formatter {
-  constructor(readonly consts : any = {}) {
+  constructor(
+    readonly prefix : string = 'aono_',
+    readonly consts : any = {},
+  ) {
   }
   format(entry : Entry) {
     const date = new Date();
@@ -20,10 +23,10 @@ export class LogstashFormatter implements Formatter {
       `"level": ${safeJsonStringify(entry.level)}, `+
       `"message": ${safeJsonStringify(entry.message)}`+
       Object.keys(this.consts)
-        .map(key => `, "${key}": ${safeJsonStringify(this.consts[key])}`)
+        .map(key => `, "${this.prefix}${key}": ${safeJsonStringify(this.consts[key])}`)
         .join('')+
       Object.keys(entry.meta)
-        .map(key => `, "»${key}": ${safeJsonStringify(entry.meta[key])}`)
+        .map(key => `, "${this.prefix}${key}": ${safeJsonStringify(entry.meta[key])}`)
         .join('')+
       ' }\n';
 
