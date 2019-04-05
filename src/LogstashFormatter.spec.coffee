@@ -109,7 +109,7 @@ describe "LogstashFormatter", ->
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
-        '"test_author": "Maciej"'+
+        '"author": "Maciej"'+
       ' }\n'
 
     it "formats an entry with meta", ->
@@ -128,7 +128,7 @@ describe "LogstashFormatter", ->
         '"logger": "test", '+
         '"level": "good", '+
         '"message": "hello, file!", '+
-        '"test_author": "Maciej", '+
+        '"author": "Maciej", '+
         '"test_number": 1'+
       ' }\n'
 
