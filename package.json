@@ -5,15 +5,13 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf lib #",
-    "compile-ts": "tsc",
-    "compile-coffee": "coffee -m -c -o lib src",
-    "compile": "npm run compile-ts && npm run compile-coffee",
-    "test": "mocha --use_strict lib/mocha.config.js $(find lib -name \"*.spec.js\")",
-    "copy-package.json": "mkdir -p lib/ && cp package.json lib/",
-    "build": "npm run compile && npm run copy-package.json && npm run test",
+    "compile": "tsc",
+    "test": "TS_NODE_FILES=1 mocha --use_strict -r source-map-support/register -r coffeescript/register -r ts-node/register src/mocha.config.coffee $(find src -name \"*.spec.coffee\")",
+    "copy": "mkdir -p lib/ && cp package.json lib/",
+    "build": "npm run compile && npm run copy && npm run test",
     "clean-build": "npm run clean && npm run build",
     "watch": "watch 'npm run clean-build' src",
-    "deploy": "npm run clean-build && npm publish lib"
+    "deploy": "npm install && npm run clean-build && npm publish lib"
   },
   "repository": {
     "type": "git",
@@ -47,6 +45,7 @@
     "should-sinon": "0.0.6",
     "sinon": "^4.5.0",
     "source-map-support": "^0.5.9",
+    "ts-node": "^8.3.0",
     "typescript": "^3.1.6"
   }
 }
