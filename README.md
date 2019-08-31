@@ -4,7 +4,7 @@
 [![Dependencies][david-image]][david-url]
 [![Dev-Dependencies][david-dev-image]][david-dev-url]
 
-> file handler with formatting and rotation support for aono logger
+> Aono handler that write to a log file with support for custom formatters and log rotation.
 
 [travis-image]: https://travis-ci.org/aono-logger/aono-file-handler.svg?branch=master
 [travis-url]: https://travis-ci.org/aono-logger/aono-file-handler

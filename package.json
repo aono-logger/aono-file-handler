@@ -1,7 +1,7 @@
 {
   "name": "aono-file-handler",
   "version": "0.5.1",
-  "description": "file handler with formatting and rotation support for aono logger",
+  "description": "Aono handler that write to a log file with support for custom formatters and log rotation.",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf lib #",
