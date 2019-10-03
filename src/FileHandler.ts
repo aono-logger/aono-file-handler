@@ -50,7 +50,7 @@ export class FileHandler implements Handler {
     return this._bytesWritten;
   }
 
-  async handle(entries : Entry[]) : Promise<void> {
+  async write(entries : Entry[]) : Promise<void> {
     if (entries.length === 0) {
       return;
     }

@@ -48,6 +48,6 @@
     "typescript": "^3.6.3"
   },
   "peerDependencies": {
-    "aono": "^0.6.0"
+    "aono": "^0.99.0"
   }
 }

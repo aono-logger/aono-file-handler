@@ -42,7 +42,7 @@ describe "FileHandler", ->
         meta: {}
 
       beforeEach ->
-        testedHandler.handle [ entry ]
+        testedHandler.write [ entry ]
 
       it "contains properly set currentFile", ->
         testedHandler.currentFile.should.equal "#{prefix}.1970-01-01_00:00:00.000"
@@ -71,7 +71,7 @@ describe "FileHandler", ->
           number: 1
 
       beforeEach ->
-        testedHandler.handle [ entry ]
+        testedHandler.write [ entry ]
 
       it "contains properly set currentFile", ->
         testedHandler.currentFile.should.equal "#{prefix}.1970-01-01_00:00:00.000"
@@ -109,7 +109,7 @@ describe "FileHandler", ->
         meta: {}
 
       beforeEach ->
-        testedHandler.handle [ entry0 ]
+        testedHandler.write [ entry0 ]
 
       it "contains null currentFile", ->
         (should testedHandler.currentFile).equal null
@@ -125,7 +125,7 @@ describe "FileHandler", ->
           meta: {}
 
         beforeEach ->
-          testedHandler.handle [ entry1 ]
+          testedHandler.write [ entry1 ]
 
         it "contains null currentFile", ->
           (should testedHandler.currentFile).equal null
@@ -154,5 +154,4 @@ describe "FileHandler", ->
             '"level": "bad", '+
             '"message": "it\'s you again"'+
           ' }\n'
-
 
