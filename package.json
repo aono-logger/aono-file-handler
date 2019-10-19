@@ -37,9 +37,9 @@
   "devDependencies": {
     "@types/node": "^12.11.1",
     "coffeescript": "^2.4.1",
-    "fake-promise": "^2.4.8",
+    "fake-promise": "^2.4.9",
     "glob": "^7.1.4",
-    "mocha": "^6.2.1",
+    "mocha": "^6.2.2",
     "should": "^13.2.3",
     "should-sinon": "0.0.6",
     "sinon": "^7.5.0",
