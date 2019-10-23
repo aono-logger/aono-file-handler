@@ -35,10 +35,10 @@
   "homepage": "https://github.com/aono-logger/aono-file-handler#readme",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.11.5",
     "coffeescript": "^2.4.1",
     "fake-promise": "^2.4.9",
-    "glob": "^7.1.4",
+    "glob": "^7.1.5",
     "mocha": "^6.2.2",
     "should": "^13.2.3",
     "should-sinon": "0.0.6",
