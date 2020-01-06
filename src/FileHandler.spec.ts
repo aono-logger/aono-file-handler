@@ -5,6 +5,8 @@ import * as glob from 'glob';
 
 import * as should from 'should';
 
+import { Entry } from 'aono';
+
 import FileHandler from './FileHandler';
 import LogstashFormatter from './LogstashFormatter';
 
@@ -47,10 +49,10 @@ describe('FileHandler', () => {
     });
 
     describe('when after handling log entry without meta', () => {
-      const entry = {
+      const entry : Entry = {
         timestamp: 0,
         logger: 'test',
-        level: 'good',
+        level: 'info',
         message: 'hello, file!',
         meta: {},
       };
@@ -76,7 +78,7 @@ describe('FileHandler', () => {
         contents.should.equal('{ '+
           '"timestamp": "1970-01-01T00:00:00.000Z", '+
           '"logger": "test", '+
-          '"level": "good", '+
+          '"level": "info", '+
           '"message": "hello, file!"'+
           ' }\n')
         ;
@@ -84,10 +86,10 @@ describe('FileHandler', () => {
     });
 
     describe('when after handling log entry with meta', () => {
-      const entry = {
+      const entry : Entry = {
         timestamp: 0,
         logger: 'test',
-        level: 'good',
+        level: 'info',
         message: 'hello, file!',
         meta: {
           number: 1,
@@ -115,7 +117,7 @@ describe('FileHandler', () => {
         contents.should.equal('{ '+
           '"timestamp": "1970-01-01T00:00:00.000Z", '+
           '"logger": "test", '+
-          '"level": "good", '+
+          '"level": "info", '+
           '"message": "hello, file!", '+
           '"aono_number": 1'+
           ' }\n'
@@ -136,10 +138,10 @@ describe('FileHandler', () => {
     });
 
     describe('when after handling first log entry', () => {
-      const entry0 = {
+      const entry0 : Entry = {
         timestamp: 0,
         logger: 'test',
-        level: 'good',
+        level: 'info',
         message: 'hello, file!',
         meta: {},
       };
@@ -156,10 +158,10 @@ describe('FileHandler', () => {
       });
 
       describe('and after adding second log entry', () => {
-        const entry1 = {
+        const entry1 : Entry = {
           timestamp: 1,
           logger: 'test',
-          level: 'bad',
+          level: 'error',
           message: 'it\'s you again',
           meta: {},
         };
@@ -176,7 +178,7 @@ describe('FileHandler', () => {
         });
 
         it('contains properly set bytesWritten', () => {
-          testedHandler.bytesWritten.should.equal(213);
+          testedHandler.bytesWritten.should.equal(215);
         });
 
         it('wrote first log entry to first file', () => {
@@ -186,7 +188,7 @@ describe('FileHandler', () => {
           contents.should.equal('{ '+
             '"timestamp": "1970-01-01T00:00:00.000Z", '+
             '"logger": "test", '+
-            '"level": "good", '+
+            '"level": "info", '+
             '"message": "hello, file!"'+
             ' }\n')
           ;
@@ -199,7 +201,7 @@ describe('FileHandler', () => {
           contents.should.equal('{ '+
             '"timestamp": "1970-01-01T00:00:00.001Z", '+
             '"logger": "test", '+
-            '"level": "bad", '+
+            '"level": "error", '+
             '"message": "it\'s you again"'+
             ' }\n')
           ;
