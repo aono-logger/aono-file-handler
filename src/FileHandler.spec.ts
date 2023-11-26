@@ -1,7 +1,7 @@
 
 import * as fs from 'fs';
 import * as util from 'util';
-import * as glob from 'glob';
+import { glob } from 'glob';
 
 import * as should from 'should';
 
@@ -16,14 +16,14 @@ describe('FileHandler', () => {
   let testedHandler : FileHandler;
 
   beforeEach(done => {
-    glob(`${prefix}*`, (err, files) => {
-      if (err) {
-        done(err);
-        return;
-      }
-      files.forEach(file => fs.unlinkSync(file));
-      done();
-    });
+    glob(`${prefix}*`)
+      .then(files => {
+        files.forEach(file => fs.unlinkSync(file));
+        done();
+      }).catch(err => {
+        done(err)
+      })
+    ;
   });
 
   describe('after creation', () => {
