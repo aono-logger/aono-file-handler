@@ -48,13 +48,13 @@ describe('FileHandler', () => {
       testedHandler.bytesWritten.should.equal(0);
     });
 
-    describe('when after handling log entry without meta', () => {
+    describe('when after handling log entry without data', () => {
       const entry : Entry = {
         timestamp: 0,
         logger: 'test',
         level: 'info',
         message: 'hello, file!',
-        meta: {},
+        data: {},
       };
 
       beforeEach(() => {
@@ -85,13 +85,13 @@ describe('FileHandler', () => {
       });
     });
 
-    describe('when after handling log entry with meta', () => {
+    describe('when after handling log entry with data', () => {
       const entry : Entry = {
         timestamp: 0,
         logger: 'test',
         level: 'info',
         message: 'hello, file!',
-        meta: {
+        data: {
           number: 1,
         },
       };
@@ -143,7 +143,7 @@ describe('FileHandler', () => {
         logger: 'test',
         level: 'info',
         message: 'hello, file!',
-        meta: {},
+        data: {},
       };
 
       beforeEach(() => {
@@ -163,7 +163,7 @@ describe('FileHandler', () => {
           logger: 'test',
           level: 'error',
           message: 'it\'s you again',
-          meta: {},
+          data: {},
         };
 
         beforeEach(() => {

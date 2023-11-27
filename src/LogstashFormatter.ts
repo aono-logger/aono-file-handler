@@ -25,8 +25,8 @@ export class LogstashFormatter implements Formatter {
       Object.keys(this.consts)
         .map(key => `, "${key}": ${safeJsonStringify(this.consts[key])}`)
         .join('')+
-      Object.keys(entry.meta)
-        .map(key => `, "${this.prefix}${key}": ${safeJsonStringify((entry.meta as any)[key])}`)
+      Object.keys(entry.data)
+        .map(key => `, "${this.prefix}${key}": ${safeJsonStringify((entry.data as any)[key])}`)
         .join('')+
       ' }\n';
 

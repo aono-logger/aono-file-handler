@@ -11,7 +11,7 @@
     "build": "npm run compile && npm run copy && npm run test",
     "clean-build": "npm run clean && npm run build",
     "watch": "watch 'npm run clean-build' src",
-    "deploy": "npm install && npm-install-peers && npm run clean-build && cd lib && npm publish"
+    "deploy": "npm install && npm run clean-build && cd lib && npm publish"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,6 @@
     "typescript": "^4.1.3"
   },
   "peerDependencies": {
-    "aono": "^1.1.0"
+    "aono": "^2.0.0"
   }
 }

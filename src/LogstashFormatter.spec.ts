@@ -15,13 +15,13 @@ describe('LogstashFormatter', () => {
       testedFormatter.consts.should.eql({});
     });
 
-    it('formats an entry without meta', () => {
+    it('formats an entry without data', () => {
       const entry : Entry = {
         timestamp: 0,
         logger: 'test',
         level: 'info',
         message: 'hello, file!',
-        meta: {},
+        data: {},
       };
 
       const formatted = testedFormatter.format(entry);
@@ -35,13 +35,13 @@ describe('LogstashFormatter', () => {
       ;
     });
 
-    it('formats an entry with meta', () => {
+    it('formats an entry with data', () => {
       const entry : Entry = {
         timestamp: 0,
         logger: 'test',
         level: 'debug',
         message: 'hello, file!',
-        meta: {
+        data: {
           number: 1,
         },
       };
@@ -58,17 +58,17 @@ describe('LogstashFormatter', () => {
       ;
     });
 
-    it('formats an entry with Error in meta', () => {
+    it('formats an entry with Error in data', () => {
       const entry : Entry = {
         timestamp: 0,
         logger: 'test',
         level: 'trace',
         message: 'hello, file!',
-        meta: {
+        data: {
           error: new Error(),
         },
       };
-      (entry.meta as any).error.stack = 'a\na\na';
+      (entry.data as any).error.stack = 'a\na\na';
 
       const formatted = testedFormatter.format(entry);
 
@@ -88,7 +88,7 @@ describe('LogstashFormatter', () => {
         logger: 'test',
         level: 'warn',
         message: '☃',
-        meta: {},
+        data: {},
       };
 
       const formatted = testedFormatter.format(entry);
@@ -116,13 +116,13 @@ describe('LogstashFormatter', () => {
       testedFormatter.consts.should.eql(consts);
     });
 
-    it('formats an entry without meta', () => {
+    it('formats an entry without data', () => {
       const entry : Entry = {
         timestamp: 0,
         logger: 'test',
         level: 'error',
         message: 'hello, file!',
-        meta: {},
+        data: {},
       };
 
       const formatted = testedFormatter.format(entry);
@@ -137,13 +137,13 @@ describe('LogstashFormatter', () => {
       ;
     });
 
-    it('formats an entry with meta', () => {
+    it('formats an entry with data', () => {
       const entry : Entry = {
         timestamp: 0,
         logger: 'test',
         level: 'info',
         message: 'hello, file!',
-        meta: {
+        data: {
           number: 1,
         },
       };
