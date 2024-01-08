@@ -8,7 +8,7 @@ import { Formatter } from './Formatter';
  */
 export class LogstashFormatter implements Formatter {
   constructor(
-    readonly prefix : string = 'aono_',
+    readonly prefix : string = 'data_',
     readonly consts : any = {},
   ) {
   }

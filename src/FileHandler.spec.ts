@@ -119,7 +119,7 @@ describe('FileHandler', () => {
           '"logger": "test", '+
           '"level": "info", '+
           '"message": "hello, file!", '+
-          '"aono_number": 1'+
+          '"data_number": 1'+
           ' }\n'
         );
       });
