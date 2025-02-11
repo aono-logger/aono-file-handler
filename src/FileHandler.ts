@@ -55,9 +55,19 @@ export class FileHandler implements Handler {
       return;
     }
     if (this.currentFile === null) {
-      this._currentFile = this._createFilePath((entries[0] as Entry).timestamp);
-      await ensureDirectoryExists(this._currentFile);
-      this._fd = await open(this._currentFile, 'ax');
+      for (let i = 0; ; i++) {
+        this._currentFile = this._createFilePath((entries[0] as Entry).timestamp, i > 0 ? `.${i}` : "");
+        await ensureDirectoryExists(this._currentFile);
+        try {
+          this._fd = await open(this._currentFile, 'ax');
+          break;
+        } catch (e) {
+          if (e.code === 'EEXIST') {
+            continue;
+          }
+          throw e;
+        }
+      }
     }
     const serializedEntries = entries.map(this._format).join('');
     const result = await write(this._fd, serializedEntries);
@@ -73,8 +83,8 @@ export class FileHandler implements Handler {
     }
   }
 
-  private _createFilePath(timestamp : number) {
-    return `${this.prefix}.${dateSuffix(new Date(timestamp))}`;
+  private _createFilePath(timestamp : number, suffix: string = "") {
+    return `${this.prefix}.${dateSuffix(new Date(timestamp))}${suffix}`;
   }
 }
 
